@@ -10,7 +10,7 @@
   "use strict";
 
   var dota = {
-    version: '1.0.0',
+    version: '1.0.1',
     lang: {
       prefix: "\\{\\{",
       suffix: "\\}\\}"
@@ -31,7 +31,7 @@
     useParams:    /(^|[^\w$])(?:dota|def)(?:\.|\[[\'\"])([\w$\.]+)(?:[\'\"]\])?\s*\:\s*([\w$\.]+|\"[^\"]+\"|\'[^\']+\'|\{[^\}]+\})/g,
     define:       dota.wrap("def\\s*([\\w\\.$]+)\\s*(\\:|=)([\\s\\S]+?)\\s*(?:\\/)?", "g"),
     defineParams: /^\s*([\w$]+):([\s\S]+)/,
-    conditional:  dota.wrap("(\\/)?(if|\\?)(\\s?else(?:\\s?if)?|\\?)?\\s*([\\s\\S]*?)\\s*", "g"),
+    conditional:  dota.wrap("(\\/)?(if|\\s?else(?:\\s?if)?|\\?)?\\s*([\\s\\S]*?)\\s*", "g"),
     iterate:      dota.wrap("(\\/)?(~|foreach)\\s*(?:" + dota.lang.suffix + "|([\\s\\S]+?)\\s*\\:\\s*([\\w$]+)\\s*(?:\\:\\s*([\\w$]+)))?\\s*", "g"),
     forin:        dota.wrap("(\\/)?(?:for|\\@)(@)?\\s*(?:" + dota.lang.suffix + "|([\\s\\S]+?)\\s*\\:\\s*([\\w$]+)\\s*(?:\\:\\s*([\\w$]+)))?\\s*", "g"),
     varname: 'self',
