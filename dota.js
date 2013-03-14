@@ -104,7 +104,7 @@
   }
 
   dota.template = function (tmpl, o, def) {
-    c = dota.templateSettings;
+    var c = dota.templateSettings;
 
     for (var i in o)
       if (o.hasOwnProperty(i) && o[i] !== undefined)
