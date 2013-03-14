@@ -31,7 +31,7 @@
     useParams:    /(^|[^\w$])(?:dota|def)(?:\.|\[[\'\"])([\w$\.]+)(?:[\'\"]\])?\s*\:\s*([\w$\.]+|\"[^\"]+\"|\'[^\']+\'|\{[^\}]+\})/g,
     define:       dota.wrap("def\\s*([\\w\\.$]+)\\s*(\\:|=)([\\s\\S]+?)\\s*(?:\\/)?", "g"),
     defineParams: /^\s*([\w$]+):([\s\S]+)/,
-    conditional:  dota.wrap("(\\/)?(if|\\s?else(?:\\s?if)?|\\?)?\\s*([\\s\\S]*?)\\s*", "g"),
+    conditional:  dota.wrap("(\\/)?(if|else(?:\\s?if)?|\\?\\?|\\?)\\s*([\\s\\S]*?)\\s*", "g"),
     iterate:      dota.wrap("(\\/)?(~|foreach)\\s*(?:" + dota.lang.suffix + "|([\\s\\S]+?)\\s*\\:\\s*([\\w$]+)\\s*(?:\\:\\s*([\\w$]+)))?\\s*", "g"),
     forin:        dota.wrap("(\\/)?(?:for|\\@)(@)?\\s*(?:" + dota.lang.suffix + "|([\\s\\S]+?)\\s*\\:\\s*([\\w$]+)\\s*(?:\\:\\s*([\\w$]+)))?\\s*", "g"),
     varname: 'self',
@@ -112,8 +112,8 @@
     str = ("var out='" + (c.strip ? str.replace(/(^|\r|\n)\t* +| +\t*(\r|\n|$)/g,' ')
       .replace(/\r|\n|\t|\/\*[\s\S]*?\*\//g,''): str)
       .replace(/'|\\/g, '\\$&')
-      .replace(c.conditional || skip, function(m, closing, ifcase, elsecase, code) {
-        return elsecase ?
+      .replace(c.conditional || skip, function(m, closing, type, code) {
+        return type === '??' || type === 'else' || type === 'else if' ?
           (!closing && code ? "';}else if(" + unescape(code) + "){out+='" : "';}else{out+='") :
           (!closing && code ? "';if(" + unescape(code) + "){out+='" : "';}out+='");
       })
