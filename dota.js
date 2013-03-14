@@ -103,8 +103,12 @@
     return code.replace(/\\('|\\)/g, "$1").replace(/[\r\t\n]/g, ' ');
   }
 
-  dota.template = function (tmpl, c, def) {
-    c = c || dota.templateSettings;
+  dota.template = function (tmpl, o, def) {
+    c = dota.templateSettings;
+
+    for (var i in o)
+      if (o.hasOwnProperty(i) && o[i] !== undefined)
+        c[i] = o[i];
 
     var cse = c.append ? startend.append : startend.split, needhtmlencode, sid = 0, indv,
       str  = (c.use || c.define) ? resolveDefs(c, tmpl, def || {}) : tmpl;
